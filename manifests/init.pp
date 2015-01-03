@@ -1,4 +1,4 @@
-class staff::members (
+class staff (
 	$current_members = {},
 	$former_members = [],
 	$authorize_ssh_to_users = [],
