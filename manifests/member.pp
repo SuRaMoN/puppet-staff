@@ -15,7 +15,7 @@ define staff::member (
 	user { $username:
 		ensure => $ensure,
 		comment => $email,
-		home => "/home/$username",
+		home => "/home/${username}",
 		managehome => true,
 		shell => "/bin/bash",
 		uid => $uid,
@@ -31,6 +31,15 @@ define staff::member (
 		key     => $ssh_key,
 		type    => 'ssh-rsa',
 		user    => $username,
+	}
+
+	if $ensure == 'absent' {
+		file { "/home/${username}":
+			ensure => 'absent',
+			force => true,
+			purge => true,
+			recurse => true,
+		}
 	}
 
 	$authorize_ssh_to_users.each |$authorize_ssh_user| {
