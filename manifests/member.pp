@@ -7,6 +7,7 @@ define staff::member (
 	$ssh_key = undef,
 	$mysql_password = undef,
 	$authorize_ssh_to_users = [],
+    $mysql_privileges = ['ALL'],
 	$enable_mysql_user = false,
 ) {
 
@@ -61,7 +62,7 @@ define staff::member (
 		if $ensure == present {
 			mysql_grant { "${username}@%/*.*":
 				user => "${username}@%",
-				privileges => ['ALL'],
+				privileges => $mysql_privileges,
 				table => '*.*',
 				require => Mysql_user["${username}@%"],
 			}
